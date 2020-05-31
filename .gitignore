@@ -2,3 +2,4 @@
 environment/
 cf_profesional/async/node_modules
 cf_backend/node_modules
+cf_backend/db/cf_backend
