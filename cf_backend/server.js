@@ -12,6 +12,7 @@ const tasksRoutes = require('./routes/tasks_routes');
 const registrationsRoutes = require('./routes/registration_routes');
 const categoriesRoutes = require('./routes/categories_routes');
 const sessionsRoutes = require('./routes/sessions_routes');
+const socketio = require('socket.io');
 
 const findUserMiddleware = require('./middlewares/find_user');
 const authUserMiddleware = require('./middlewares/auth_user');
@@ -64,4 +65,38 @@ app.post('/pendientes', function(request, response) {
    response.send('Inserción Finalizada');
 });*/
 
-app.listen(3000);
+let server = app.listen(3000);
+let io = socketio(server);
+let sockets = {};
+let usersConn = 0;
+
+io.on('connection', function (socket) {
+   let userId = socket.request._query.loggeduser;
+   if(userId) sockets[userId] = socket;
+   console.log(sockets);
+
+   usersConn++;
+   io.emit('count_updated', { count: usersConn });
+   socket.on('new_task', function (data) {
+      if(data.userId) {
+         let userSocket = sockets[userId];
+         if(!userSocket) return;
+
+         userSocket.emit('new_task', data);
+      }
+   });
+
+   socket.on('disconnect', function() {
+      Object.keys(sockets).forEach(userId => {
+         let s = sockets[userId];
+         if(s.id == socket.id) sockets[userId] = null;
+      });
+
+      console.log(sockets);
+
+      usersConn--;
+      io.emit('count_updated', { count: usersConn });
+   });
+});
+
+const client = require('./realtime/client');
