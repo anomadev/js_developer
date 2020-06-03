@@ -10,6 +10,7 @@ const app = express();
 
 const tasksRoutes = require('./routes/tasks_routes');
 const registrationsRoutes = require('./routes/registration_routes');
+const categoriesRoutes = require('./routes/categories_routes');
 const sessionsRoutes = require('./routes/sessions_routes');
 
 const findUserMiddleware = require('./middlewares/find_user');
@@ -36,6 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(tasksRoutes);
 app.use(registrationsRoutes);
+app.use(categoriesRoutes);
 app.use(sessionsRoutes);
 
 app.get('/', function(request, response) {

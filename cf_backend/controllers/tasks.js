@@ -3,12 +3,14 @@ const Task = require('../models').Task;
 module.exports = {
     index: function(request, response) {
         Task.findAll().then((tasks) => {
-            response.render('tasks/index', {tasks: tasks});
+            response.render('tasks/index', {tasks: request.user.tasks});
         });
     },
+
     create: function(request, response) {
         Task.create({
-            description: request.body.description
+            description: request.body.description,
+            userId: request.user.id
         }).then(result => {
             response.json(result);
         }).catch(err => {
@@ -22,7 +24,9 @@ module.exports = {
     },
 
     show: function(request, response) {
-        Task.findByPk(request.params.id).then(function(task) {
+        Task.findByPk(request.params.id, {
+            include: ['user', 'categories']
+        }).then(function(task) {
             response.render('tasks/show', {task: task});
         });
     },
@@ -34,12 +38,14 @@ module.exports = {
     },
 
     update: function(request, response) {
-        Task.update({description: request.body.description}, {
-            where: {
-                id: request.params.id
-            }
-        }).then(function(result) {
-            response.redirect('/tasks/' + request.params.id);
+        let task = Task.findByPk(request.params.id).then(task => {
+            task.description = request.body.description;
+            task.save().then(() => {
+                let categoryIds = request.body.categories.split(",");
+                task.addCategories(categoryIds).then(() => {
+                    response.redirect(`/tasks/${task.id}`);
+                });
+            });
         });
     },
 
