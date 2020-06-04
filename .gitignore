@@ -1,5 +1,10 @@
 # Untracked files:
 environment/
+
+# archivos del curso profesional de backend
 cf_profesional/async/node_modules
 cf_backend/node_modules
 cf_backend/db/cf_backend
+
+# archivos del curso de servicios web rest con nodejs
+places/node_modules
