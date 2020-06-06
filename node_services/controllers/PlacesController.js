@@ -8,6 +8,7 @@ const validParams = ['title', 'description', 'address', 'acceptsCreditCard', 'op
 function find(request, response, next) {
     Place.findOne({slug: request.params.id}).then(place => {
         request.place = place;
+        request.mainObj = place;
         next();
     }).catch(err => next(err));
 }
@@ -24,6 +25,7 @@ function index(request, response) {
 
 function create(request, response, next) {
     const params =  helpers.paramsBuilder(validParams, request.body);
+    params['_user'] = request.user.id;
     Place.create(params).then(doc => {
         request.place = doc;
         next();

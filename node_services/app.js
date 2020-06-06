@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const jwtMiddleware = require('express-jwt');
 
 // Routes
 const places = require('./routes/places');
@@ -11,6 +12,7 @@ const sessions = require('./routes/sessions');
 
 // Database
 const db = require('./config/database');
+const secrets = require('./config/secrets');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,6 +25,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(jwtMiddleware({secret: secrets.jwtSecret})
+    .unless({path: ['/sessions', '/users'], method: 'GET'}));
 
 app.use('/places', places);
 app.use('/users', users);

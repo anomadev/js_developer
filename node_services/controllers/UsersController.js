@@ -10,4 +10,12 @@ function create(request, response, next) {
     }).catch(error => response.status(422).json({error}));
 }
 
-module.exports = { create }
+function myPlaces(request, response) {
+    User.find({'_id': request.user.id}).then(user => {
+        user.places.then(places => {
+            response.json(places);
+        }).catch(err => response.json(err));
+    });
+}
+
+module.exports = { create, myPlaces }
