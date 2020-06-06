@@ -7,5 +7,5 @@ cf_backend/node_modules
 cf_backend/db/cf_backend
 
 # archivos del curso de servicios web rest con nodejs
-places/node_modules
-places/api/node_modules
+node_services/node_modules
+node_services/config/secrets.js
