@@ -6,6 +6,8 @@ var logger = require('morgan');
 
 // Routes
 const places = require('./routes/places');
+const users = require('./routes/users');
+const sessions = require('./routes/sessions');
 
 // Database
 const db = require('./config/database');
@@ -23,6 +25,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/places', places);
+app.use('/users', users);
+app.use('/sessions', sessions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
