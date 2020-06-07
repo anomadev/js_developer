@@ -7,7 +7,7 @@ const User = require('../models/User');
 function find(request, response, next) {
     Visit.findById(request.params.visit_id).then(visit => {
         request.mainObj = visit;
-        request.favorite = visit;
+        request.visit = visit;
         next();
     }).catch(next);
 }

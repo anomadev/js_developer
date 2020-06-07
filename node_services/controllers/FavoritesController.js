@@ -12,10 +12,9 @@ function find(request, response, next) {
 }
 
 function index(request, response) {
-    User.findOne({'_id': request.user.id}).then(user => {
-        user.favorites.then(places => {
-            response.json(places);
-        })
+    if(!request.fullUser) return response.json({});
+    request.fullUser.favorites.then(places => {
+        response.json(places);
     }).catch(err => {
         console.log(err);
         response.json(err);
