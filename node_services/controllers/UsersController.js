@@ -7,14 +7,20 @@ function create(request, response, next) {
     User.create(params).then(user => {
         request.user = user;
         next();
-    }).catch(error => response.status(422).json({error}));
+    }).catch(error => {
+        console.log(error);
+        response.status(422).json({error})
+    });
 }
 
 function myPlaces(request, response) {
     User.find({'_id': request.user.id}).then(user => {
         user.places.then(places => {
             response.json(places);
-        }).catch(err => response.json(err));
+        }).catch(err => {
+            console.log(err);
+            response.json(err);
+        });
     });
 }
 

@@ -12,7 +12,10 @@ function authenticate(request, response, next) {
                 next(new Error('Invalid Credentials'));
             }
         })
-    }).catch(error => next(error));
+    }).catch(error => {
+        console.log(error);
+        next(error);
+    });
 }
 
 function generateToken(request, response, next) {

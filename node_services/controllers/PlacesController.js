@@ -1,6 +1,5 @@
 const Place = require('../models/Place');
 const upload = require('../config/upload');
-const uploader = require('../models/Uploader');
 const helpers = require('./helpers');
 
 const validParams = ['title', 'description', 'address', 'acceptsCreditCard', 'openHour', 'closeHour'];
@@ -10,7 +9,10 @@ function find(request, response, next) {
         request.place = place;
         request.mainObj = place;
         next();
-    }).catch(err => next(err));
+    }).catch(err => {
+        console.log(err);
+        next(err);
+    });
 }
 
 function index(request, response) {
@@ -20,7 +22,10 @@ function index(request, response) {
         sort: { '_id': -1 }
     }).then(docs => {
         response.json(docs);
-    }).catch(err => response.json(err));
+    }).catch(err => {
+        console.log(err);
+        response.json(err);
+    });
 }
 
 function create(request, response, next) {
@@ -30,6 +35,7 @@ function create(request, response, next) {
         request.place = doc;
         next();
     }).catch(err => {
+        console.log(err);
         next(err);
     });
 }
@@ -43,13 +49,19 @@ function update(request, response) {
     request.place = Object.assign(request.place, params);
     request.place.save().then(result => {
         response.json(result);
-    }).catch(err => response.json(err));
+    }).catch(err => {
+        console.log(err);
+        response.json(err);
+    });
 }
 
 function destroy(request, response) {
     request.place.remove().then(result => {
         response.json({});
-    }).catch(err => response.json(err));
+    }).catch(err => {
+        console.log(err);
+        response.json(err);
+    });
 }
 
 function multerMiddleware() {
@@ -73,7 +85,10 @@ function saveImage(request, response) {
 
         Promise.all(promises).then(results => {
             response.json(request.place);
-        }).catch(err => response.json(err));
+        }).catch(err => {
+            console.log(err);
+            response.json(err);
+        });
     } else {
         response.status(422).json({
             error: request.error || 'Could not save place'

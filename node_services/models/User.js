@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const mongooseBcrypt = require('mongoose-bcrypt');
 
+// models
 const Place = require('./Place');
+const FavoritePlace = require('./FavoritePlace');
 
 let userSchema = new mongoose.Schema({
     email: {
@@ -19,7 +21,7 @@ let userSchema = new mongoose.Schema({
 userSchema.plugin(mongooseBcrypt);
 
 userSchema.post('save', function(user, next) {
-    User.count({}).then(count => {
+    User.countDocuments({}).then(count => {
         if(count == 1) {
             User.update({'_id': user._id}, {admin:true}).then(result => {
                 next();
@@ -29,7 +31,15 @@ userSchema.post('save', function(user, next) {
 });
 
 userSchema.virtual('places').get(function() {
-   return Place.findOne({'_user': this._id });
+    console.log(this._id);
+   return Place.find({'_user': this._id });
+});
+
+userSchema.virtual('favorites').get(function() {
+    return FavoritePlace.find({'_user': this._id}, {'_place': true}).then(favorites => {
+        let placeIds = favorites.map(favorite => favorite.place);
+        return Place.find({'_id': {$in: placeIds}});
+    });
 });
 
 const User = mongoose.model('User', userSchema);
