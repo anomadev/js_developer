@@ -10,3 +10,6 @@ cf_backend/db/cf_backend
 node_services/.idea
 node_services/node_modules
 node_services/config/secrets.js
+
+# archivos del curso de typescript
+typescript/.idea
