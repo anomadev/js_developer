@@ -1,14 +1,18 @@
 <template>
   <div id="app">
+    <!-- transiciones y animaciones -->
+    <TransitionComponent></TransitionComponent>
+    <!-- validación -->
     <Validate></Validate>
+    <!-- slots en componentes -->
     <Example>
-        <template v-slot:link>
-            <a href="http://codigofacilito.com">Codigo facilito</a>
-        </template>
+      <template v-slot:link>
+        <a href="http://codigofacilito.com">Codigo facilito</a>
+      </template>
 
-        <template v-slot:paragraph>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor magna aliqua.</p>
-        </template>
+      <template v-slot:paragraph>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor magna aliqua.</p>
+      </template>
     </Example>
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
@@ -19,13 +23,15 @@
 import HelloWorld from './components/HelloWorld.vue'
 import Example from './components/Example.vue'
 import Validate from './components/Validate.vue'
+import TransitionComponent from "./components/TransitionComponent.vue";
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
     Example,
-    Validate
+    Validate,
+    TransitionComponent
   }
 }
 </script>
