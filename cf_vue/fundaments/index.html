@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Binding</title>
+</head>
+<body>
+    <div id="app">
+        <!-- Binding -->
+        <h1>{{ message }}</h1>
+        <input type="text" v-model="message">
+
+        <!-- Directivas -->
+        <span :title="message">Hover me!!</span>
+
+        <!-- v-for & listas -->
+        <!-- v-for en arreglos -->
+        <ul>
+            <li v-for="language in languages">{{ language }}</li>
+        </ul>
+        <!-- v-for en objetos -->
+        <ul>
+            <li v-for="(value, key, index) in course">{{ value }} {{ key }} {{ index }}</li>
+        </ul>
+        <!-- v-for en arreglo de objetos -->
+        <ul>
+            <li v-for="(value, key, index) in items" :key="index">{{ value.name }}</li>
+        </ul>
+        <!-- v-if -->
+        <p v-if="flag">El valor a evaluar es verdadero</p>
+        <p v-else>El valor que se esta evaluando es falso</p>
+        <!-- v-show -->
+        <!-- se recomienda el uso cuando el manejo de información es muy grande y el proceso de crear sea costoso -->
+        <p v-show="flag"></p>
+        <!-- template -->
+        <!-- Nos permite agrupar elemento en una condicionar sin que esta etiqueta se refleje en el DOM -->
+        <template v-if="flag">
+            <p>Elemento dependiente de una condicional</p>
+            <p>Elemento dependiente de una condicional</p>
+            <p>Elemento dependiente de una condicional</p>
+        </template>
+        <!-- v-on -->
+        <!-- Se utiliza para escuchar eventos del DOM y correr algun método de javascript -->
+        <button @click="eventButton('Hello Vue', $event)">v-on de Vue</button>
+
+        <form @submit.prevent="eventSubmit()">
+            <button type="submit">Enviar</button>
+        </form>
+
+        <!-- modificador que nos configura al elemento para permitir un solo click por petición -->
+        <button @click.once="eventOnce">Una llamada por petición</button>
+
+        <!-- modificadores de teclado concatenando el modificador once -->
+        <input type="text" @keyup.enter.once="eventEnterKey">
+
+        <!-- trabajar con estilos en vue -->
+        <div class="danger" v-bind:class="classObject">
+            Alerta: asignando clases mediante un objeto de Vue
+        </div>
+        <div class="danger" v-bind:class="[(flag) ? 'alert-danger' : 'alert-success']">
+            Alerta: asignando clases mediante el operador ternario
+        </div>
+        <div class="danger" v-bind:class="classObj">
+            Alerta: asignando clases mediante una propiedad computada
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+
+            data: {
+                message: "Two Way Binding!!",
+                languages: ["PHP", "JavaScript", "Python", "Ruby", "Java"],
+                course: {
+                    name: "Curso Profesional de Vue",
+                    language: "Javascript",
+                    tool: "TypeScript"
+                },
+                items: [
+                    { name: "One" },
+                    { name: "Two" },
+                    { name: "Three" }
+                ],
+                flag: true,
+                classObject: {
+                    'alert-danger': true
+                }
+            },
+            /**
+             *  Ciclo de vida del componente
+             */
+
+            beforeCreated: function() {
+                console.log("Before Created!!");
+            },
+
+            created: function() {
+                console.log("Created");
+            },
+
+            mounted: function() {
+                console.log("Mounted");
+            },
+
+            updated: function() {
+                console.log("Updated");
+            },
+
+            destroyed: function() {
+                console.log("Destroyed");
+            },
+
+            methods: {
+                eventButton: function(value, event) {
+                    if(event) event.preventDefault();
+                    alert("clicked: " + value);
+                },
+
+                eventSubmit: function() {
+                    alert("Sent");
+                },
+
+                eventOnce: function() {
+                    alert("Petición realizada");
+                },
+
+                eventEnterKey: function() {
+                    alert("Press Enter Key");
+                }
+            },
+
+            // propiedades computadas
+            computed: {
+                classObj: function() {
+                    return {
+                        'alert-dannger': this.flag
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

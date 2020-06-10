@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Formularios con Vue</title>
+</head>
+<body>
+    <div id="app">
+        <!-- Propiedad computada -->
+        <p>{{ getRandom }}</p>
+
+        <!-- Trabajo con formularios -->
+        <template v-if="errors.length">
+            <ul>
+                <li v-for="error in errors" v-text="error"></li>
+            </ul>
+        </template>
+
+        <form @submit.prevent="formSubmit">
+            <input type="text" v-model="input">
+            <select v-model="select">
+                <option value="Default">Default</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+            <textarea v-model="textarea"></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var vm = new Vue({
+           el: "#app",
+           data: {
+               errors: [],
+               input: "",
+               select: "",
+               textarea: ""
+           },
+
+            methods: {
+               formSubmit: function() {
+                   this.errors = [];
+
+                   if(!this.input)
+                       this.errors.push("El campo input es requerido");
+
+                   if(!this.select)
+                       this.errors.push("El campo input es requerido");
+
+                   if(!this.textarea)
+                       this.errors.push("El campo input es requerido");
+
+                   console.log(this.input);
+                   console.log(this.select);
+                   console.log(this.textarea);
+               }
+            },
+
+            computed: {
+               getRandom: function() {
+                   return Math.random();
+               }
+            },
+
+            watch: {
+                /**
+                 *
+                 * Nos permite ejecutar acciones cuando el valor de una propiedad con el mismo nombre de la
+                 * función cambie, trabajando tanto con el nuevo valor, como el anterior a ese.
+                 */
+
+               input: function(newValue, oldValue) {
+                   console.log("Changed!!");
+                   console.log(`Cambio del valor ${oldValue} a ${newValue}`);
+               }
+            }
+        });
+    </script>
+</body>
+</html>
