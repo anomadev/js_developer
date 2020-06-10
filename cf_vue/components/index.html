@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Components</title>
+</head>
+<body>
+    <div id="app">
+        <new-component></new-component>
+    </div>
+
+    <div id="app2">
+        <title-component :title="message"></title-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        // Componente con un botón que cuenta el numero que click sobre el mismo
+        var newComponent = {
+            template: "<button @click='clickCounter'>Clicks {{ counter }}</button>",
+            data: function() {
+                return {
+                    counter: 0
+                }
+            },
+            methods: {
+                clickCounter: function() {
+                    this.counter++;
+                }
+            }
+        }
+
+        // Componente que recibe argumentos mediante la propiedad props
+        Vue.component('title-component', {
+            template: "<h1>{{ title }}</h1>",
+            props: {
+                title: String
+            }
+        });
+
+        // Primera instancia de Vue con el registro local del componente
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                message: "Hello Vue!!"
+            },
+            components: {
+                'new-component': newComponent
+            }
+        });
+
+        // Segunda instancia de Vue sin el registro del componente
+        var vm2 = new Vue({
+           el: "#app2",
+           data: {
+               message: "Hello Vue ¿¡again!?"
+           }
+        });
+    </script>
+</body>
+</html>

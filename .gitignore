@@ -13,3 +13,7 @@ node_services/config/secrets.js
 
 # archivos del curso de typescript
 typescript/.idea
+
+# archivos del curso profesional de vue
+cf_vue/.idea
+cf_vue/app/node_modules
