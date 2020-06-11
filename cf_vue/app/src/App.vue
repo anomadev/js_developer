@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <!-- mutations -->
+    <p>{{ $store.getters['getCount'] }}</p>
+    <button @click="add">+</button>
     <!-- Directivas personalizadas -->
     <input type="text" v-width="'400px'">
     <!-- Filtros -->
@@ -64,6 +67,12 @@ export default {
       inserted: function (el, binding) {
         el.style.width = binding.value;
       }
+    }
+  },
+
+  methods: {
+    add: function () {
+      this.$store.commit('increment');
     }
   }
 }
