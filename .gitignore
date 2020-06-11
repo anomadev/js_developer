@@ -17,3 +17,7 @@ typescript/.idea
 # archivos del curso profesional de vue
 cf_vue/.idea
 cf_vue/app/node_modules
+
+# archivos del taller para consumir un api con vue
+vue_rest/.idea
+vue_rest/node_modules
