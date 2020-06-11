@@ -1,5 +1,16 @@
 <template>
   <div id="app">
+    <!-- Directivas personalizadas -->
+    <input type="text" v-width="'400px'">
+    <!-- Filtros -->
+    <section>
+      <p>{{ name | uppercase }}</p>
+      <input type="text" v-model="name">
+    </section>
+    <!-- Vue Router -->
+    <router-link to="/home">Home</router-link>
+    <router-link to="/about">About</router-link>
+    <router-view></router-view>
     <!-- transiciones y animaciones -->
     <TransitionComponent></TransitionComponent>
     <!-- validación -->
@@ -27,11 +38,33 @@ import TransitionComponent from "./components/TransitionComponent.vue";
 
 export default {
   name: 'App',
+
+  data() {
+    return {
+      name: ""
+    }
+  },
+
   components: {
     HelloWorld,
     Example,
     Validate,
     TransitionComponent
+  },
+
+  filters: {
+    uppercase: function(value) {
+      if(!value) return '';
+      return value.toString().toUpperCase();
+    }
+  },
+
+  directives: {
+    width: {
+      inserted: function (el, binding) {
+        el.style.width = binding.value;
+      }
+    }
   }
 }
 </script>
