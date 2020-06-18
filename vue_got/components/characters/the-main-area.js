@@ -43,10 +43,10 @@ const TheMainArea = {
                 </div> <!-- ends row bodies -->
 
                 <div class="btn-area d-flex justify-content-center">
-                    <div class="btn-container d-flex justify-content-between">
+                    <div v-if="!takingScreenshot" class="btn-container d-flex justify-content-between">
                         <button class="btn btn-light" @click="randomAll">Random</button>
-                        <button id="about-btn" class="btn btn-light" @click="aboutToggle">About</button>
-                        <button class="btn btn-light">Download</button>
+                        <button id="about-btn" class="btn btn-light" @click="aboutToggle" ref="btnAbout">About</button>
+                        <button class="btn btn-light" @click="takeScreenshot">Download</button>
                     </div>
                 </div>
             </div> <!-- ends figure -->
@@ -101,7 +101,9 @@ const TheMainArea = {
                 titles: [],
                 quotes: []
             },
-            apiCalled: false
+            apiCalled: false,
+            takingScreenshot: false,
+            message: 'Close'
         }
     },
 
@@ -134,6 +136,7 @@ const TheMainArea = {
             } else {
                 this.isAboutSelected = true;
                 this.aboutCharacter();
+                this.$refs.btnAbout.innerText = this.message;
             }
         },
 
@@ -180,6 +183,31 @@ const TheMainArea = {
                     this.apiCalled = false;
                 }
             }
+        },
+
+        takeScreenshot: function() {
+            this.takingScreenshot = true;
+            let selector = document.querySelector('main');
+            html2canvas(selector).then(canvas => {
+                let croppedCanvas = document.createElement('canvas');
+                croppedCanvasContext = croppedCanvas.getContext('2d');
+
+                croppedCanvas.width = selector.clientWidth;
+                croppedCanvas.height = selector.clientHeight;
+
+                croppedCanvasContext.drawImage(canvas,
+                    0, 0, selector.clientWidth, selector.clientHeight,
+                    0, 0, selector.clientWidth, selector.clientHeight);
+
+                return croppedCanvas;
+            }).then(canvas => {
+                let imageUrl = canvas.toDataURL("image/png", 1.0);
+                let link = document.createElement('a');
+                link.download = "screenshot.png";
+                link.href = imageUrl;
+                link.click();
+                this.takingScreenshot = false;
+            })
         }
     }
 }

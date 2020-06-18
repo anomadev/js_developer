@@ -38,7 +38,7 @@ const PartSelector = {
     watch: {
         rand: function(value) {
             if(value)
-                this.selectedPartIndex = Math.floor(Math.random() * (this.maxIndex - this.minIndex + 1)) + this.minIndex;
+                this.selectedPartIndex = getRandom(this.minIndex, this.maxIndex);
                 this.$emit('randomInvoked', true);
                 this.emitSelected();
         }
