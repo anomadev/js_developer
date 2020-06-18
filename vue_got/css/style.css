@@ -8,11 +8,11 @@ Table of Content
 
 @font-face {
     font-family: GameOfThrones;
-    src: url(./assets/fonts/Game\ of\ Thrones.ttf);
+    src: url(../assets/fonts/GameofThrones.ttf);
 }  
 @font-face {
     font-family: Aquifer;
-    src: url(./assets/fonts/Aquifer.ttf);
+    src: url(../assets/fonts/Aquifer.ttf);
 }  
 :root{
     --red-wine: #a72c11;

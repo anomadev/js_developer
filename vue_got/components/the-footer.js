@@ -1,4 +1,4 @@
-const theFooter = {
+const TheFooter = {
     template:
     `<div class="container footer">
         <nav class="nav justify-content-center">

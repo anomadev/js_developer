@@ -4,93 +4,110 @@ const TheMainArea = {
         <h1 class="main-title">Valar Morghulis..</h1>
         <h2 class="main-subtitle">Who's next?</h2>
         <div class="row">
+            <div class="text-center text-md-left" id="quote-area"> <!-- quote area -->
+                <div class="spinner-container">
+                    <div class="spinner-grow red-spinner" role="status">
+                        <span class="sr-only"Loading...></span>
+                    </div>
+                </div>
+                <ul class="quote-list">
+                    <li></li>
+                </ul>
+            </div> <!-- ends quote area -->
 
             <div class="col-12"> <!-- figure -->
                 <div class="ch-body d-flex flex-column"> <!-- row bodies -->
                     <div class="body-row head-row d-flex justify-content-center"> <!-- head -->
-                        <div class="body-part position-relative">
-                            <div class="prev-area" @mouseover="hoverPrev = true" @mouseleave="hoverPrev = false">
-                                <button class="prev-btn" v-show="hoverPrev" @click="selectPrevHead">&#10094;</button>
-                            </div>
-                            <img :src="fileParts.heads[selectedHeadIndex].src" class="body-img heads-img about-selected">
-                            <div class="next-area" @mouseover="hoverNext = true" @mouseleave="hoverNext = false">
-                                <button class="next-btn" v-show="hoverNext" @click="selectNextHead">&#10095;</button>
-                            </div>
-                        </div>
+                        <PartSelector :parts="fileParts.heads" 
+                            :rand="randomHead" 
+                            @randomInvoked="invoked => randomHead = !invoked"
+                            @partSelected="part => partSelected(part)">
+                        </PartSelector>
                     </div> <!-- ends head -->
 
                     <div class="body-row middle-row d-flex justify-content-center"> <!-- body --->
-                        <div class="body-part position-relative">
-                            <div class="prev-area" @mouseover="hoverPrev = true" @mouseleave="hoverPrev = false">
-                                <button class="prev-btn" v-show="hoverPrev" @click="selectPrevBody>&#10094;</button>
-                            </div>
-                            <img :src="fileParts.middles[selectedBodyIndex].src" class="body-img heads-img about-selected">
-                            <div class="next-area" @mouseover="hoverNext = true" @mouseleave="hoverNext = false">
-                                <button class="next-btn" v-show="hoverNext" @click="selectNextBody">&#10095;</button>
-                            </div>
-                        </div>
+                        <PartSelector :parts="fileParts.middles" 
+                            :rand="randomMiddle" 
+                            @randomInvoked="invoked => randomMiddle = !invoked">
+                        </PartSelector>
                     </div> <!-- ends body -->
 
                     <div class="body-row foot-row d-flex justify-content-center"> <!-- foot -->
-                        <div class="body-part position-relative">
-                            <div class="prev-area" @mouseover="hoverPrev = true" @mouseleave="hoverPrev = false">
-                                <button class="prev-btn" v-show="hoverPrev" @click="selectPrevFoot>&#10094;</button>
-                            </div>
-                            <img :src="fileParts.foots[selectedFootIndex].src" class="body-img heads-img about-selected">
-                            <div class="next-area" @mouseover="hoverNext = true" @mouseleave="hoverNext = false">
-                                <button class="next-btn" v-show="hoverNext" @click="selectNextFoot">&#10095;</button>
-                            </div>
-                        </div>
+                        <PartSelector :parts="fileParts.foots" 
+                            :rand="randomFoot" 
+                            @randomInvoked="invoked => randomFoot = !invoked">
+                        </PartSelector>
                     </div> <!-- ends foot -->
                 </div> <!-- ends row bodies -->
+
+                <div class="btn-area d-flex justify-content-center">
+                    <div class="btn-container d-flex justify-content-between">
+                        <button class="btn btn-light" @click="randomAll">Random</button>
+                        <button id="about-btn" class="btn btn-light">About</button>
+                        <button class="btn btn-light">Download</button>
+                    </div>
+                </div>
             </div> <!-- ends figure -->
 
-            <div class="btn-area d-flex justify-content-center">
-                <div class="btn-container d-flex justify-content-between">
-                    <button class="btn btn-light">Random</button>
-                    <button id="about-btn" class="btn btn-light">About</button>
-                    <button class="btn btn-light">Download</button>
+            <div id="about-area"> <!-- about area -->
+                <div class="spinner-container">
+                    <div class="spinner-grow red-spinner" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
-            </div>
+
+                <div class="text-center text-md-left">
+                    <p class="about-p"><b>Name: </b></p>
+                    <p class="about-p"><b>Born: </b></p>
+                    <p class="about-p"><b>Culture: </b></p>
+                    <p class="about-p"><b>Titles: </b></p>
+                    <ul class="about-titles">
+                        <li></li>
+                    </ul>
+                </div>
+            </div> <!-- ends about area-->
         </div>
     </div>`,
+
+    components: { 
+        PartSelector 
+    },
 
     data: function() {
         return {
             fileParts: bodies,
-            hoverPrev: false,
-            hoverNext: false,
-            selectedHeadIndex: 0,
-            selectedBodyIndex: 0,
-            selectedFootIndex: 0,
-            minIndex: 0,
-            maxIndex: bodies.heads.length -1
+            randomHead: false,
+            randomMiddle: false,
+            randomFoot: false,
+            selectedCharId: 1,
+            selectedParts: {
+                head: {},
+                middle: {},
+                foot: {}
+            }
         }
     },
 
     methods: {
-        selectPrevHead: function() {
-            this.selectedHeadIndex = this.selectedHeadIndex > this.minIndex ? this.selectedHeadIndex - 1 : this.maxIndex;
+        randomAll: function() {
+            this.randomHead = true;
+            this.randomMiddle = true;
+            this.randomFoot = true;
         },
 
-        selectNextHead: function() {
-            this.selectedHeadIndex = this.selectedHeadIndex < this.maxIndex ? this.selectedHeadIndex + 1 : this.minIndex;
-        },
+        partSelected: function(part) {
+            if(part.type == 'heads') {
+                this.selectedParts.head = part;
+                this.selectedCharId = part.id;
+            }
 
-        selectPrevBody: function() {
-            this.selectedBodyIndex = this.selectedBodyIndex > this.minIndex ? this.selectedBodyIndex - 1 : this.maxIndex;
-        },
+            if(part.type == 'middles') {
+                this.selectedParts.middle = part;
+            }
 
-        selectNextBody: function() {
-            this.selectedBodyIndex = this.selectedBodyIndex < this.maxIndex ? this.selectedBodyIndex + 1 : this.minIndex;
-        },
-
-        selectPrevFoot: function() {
-            this.selectedFootIndex = this.selectedFootIndex > this.minIndex ? this.selectedFootIndex - 1 : this.maxIndex;
-        },
-
-        selectNextFoot: function() {
-            this.selectedFootIndex = this.selectedFootIndex < this.maxIndex ? this.selectedFootIndex + 1 : this.minIndex;
-        },
+            if(part.type == "foots") {
+                this.selectedParts.foot = part;
+            }
+        }
     }
 }
