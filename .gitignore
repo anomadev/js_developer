@@ -25,4 +25,8 @@ vue_rest/node_modules
 # archivos del taller vue con firebase
 vue_firebase/.idea
 vue_firebase/node_modules
-vue_firebase/.env
+
+# archivos del taller spa con nuxt
+nuxt_spa/.idea
+nuxt_spa/.nuxt
+nuxt_spa/node_modules
