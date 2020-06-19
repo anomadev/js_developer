@@ -21,3 +21,8 @@ cf_vue/app/node_modules
 # archivos del taller para consumir un api con vue
 vue_rest/.idea
 vue_rest/node_modules
+
+# archivos del taller vue con firebase
+vue_firebase/.idea
+vue_firebase/node_modules
+vue_firebase/.env
