@@ -30,3 +30,6 @@ vue_firebase/node_modules
 nuxt_spa/.idea
 nuxt_spa/.nuxt
 nuxt_spa/node_modules
+
+# archivos del curso de introduccin a Vue 3
+pz_vuecommerce/.idea
