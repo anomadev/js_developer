@@ -31,5 +31,10 @@ nuxt_spa/.idea
 nuxt_spa/.nuxt
 nuxt_spa/node_modules
 
-# archivos del curso de introduccin a Vue 3
+# archivos del curso de introduccion a Vue 3
 pz_vuecommerce/.idea
+
+# archivos del curso basico de Vue 2
+pz_basicsvue/.idea
+pz_basicsvue/exchange/.idea
+pz_basicsvue/exchange/node_modules
