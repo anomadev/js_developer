@@ -38,3 +38,7 @@ pz_vuecommerce/.idea
 pz_basicsvue/.idea
 pz_basicsvue/exchange/.idea
 pz_basicsvue/exchange/node_modules
+
+# archivos del curso de npm
+pz_npm/.idea
+pz_npm/node_modules
