@@ -52,6 +52,9 @@ pz_webpackreact/node_modules
 # archivos del curso profesional de javascript
 pz_profesionaljs/.idea
 pz_profesionaljs/node_modules
+pz_profesionaljs/assets/BigBuckBunny.mp4
+pz_profesionaljs/.cache
+pz_profesionaljs/dist
 
 # archivos del curso profesional de vue
 pz_profesionalvue/musicapp/.idea
