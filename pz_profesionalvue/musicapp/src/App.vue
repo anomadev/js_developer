@@ -1,55 +1,18 @@
 <template lang="pug">
   #app
-    section.section
-      nav.nav.has-shadow
-        .container
-          input.input.is-large(
-            type="text",
-            placeholder="Buscar canciones",
-            v-model="searchQuery"
-          )
-          a.button.is-info.is-large(@click="search") Buscar
-          a.button.is-danger.is-large &times;
-
-      .container
-        p
-          small {{ searchMessage }}
-
-      .container.results
-        .columns
-          .column(v-for="t in tracks")
-            | {{ t.name }} - {{ t.artist }}
+    pm-header
+    router-view
+    pm-footer
 </template>
 
 <script>
-import trackService from './services/track.js'
+import PmFooter from './components/layout/Footer.vue'
+import PmHeader from './components/layout/Header.vue'
 
 export default {
   name: 'App',
 
-  data() {
-    return {
-      searchQuery: '',
-      tracks: []
-    }
-  },
-
-  computed: {
-    searchMessage() {
-      return `Encontrados ${this.tracks.length}`
-    }
-  },
-
-  methods: {
-    search() {
-      if (!this.searchQuery) { return }
-
-      trackService.search(this.searchQuery)
-        .then(res => {
-          this.tracks = res.tracks.items
-        })
-    }
-  }
+  components: { PmFooter, PmHeader },
 }
 </script>
 
@@ -58,5 +21,9 @@ export default {
 
 .results {
   margin-top: 50px;
+}
+
+.is-active {
+  border: 3px solid #23d160;
 }
 </style>
