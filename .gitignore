@@ -59,3 +59,11 @@ pz_profesionaljs/dist
 # archivos del curso profesional de vue
 pz_profesionalvue/musicapp/.idea
 pz_profesionalvue/musicapp/node_modules
+
+# archivos del curso de testing con vue
+pz_testingvue/node_modules
+
+# archivos del curso avanzado de vue
+pz_vuediablo/node_modules
+pz_vuerooms/node_modules
+pz_renderfunctions/node_modules
