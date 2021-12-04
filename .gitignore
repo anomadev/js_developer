@@ -67,3 +67,11 @@ pz_testingvue/node_modules
 pz_vuediablo/node_modules
 pz_vuerooms/node_modules
 pz_renderfunctions/node_modules
+
+# archivos del curso practico de react.js
+pz_reactjs/.idea
+pz_reactjs/node_modules
+
+# archivos del curso de backend con node 
+pz_nodeapi/node_modules
+pz_nodeapi/.idea
