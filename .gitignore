@@ -80,3 +80,10 @@ pz_nodedb/node_modules
 pz_nodedb/postgres_data
 pz_nodedb/mysql_data
 pz_nodedb/.idea
+pz_nodedb/.env
+
+pz_nodeauth/node_modules
+pz_nodeauth/postgres_data
+pz_nodeauth/mysql_data
+pz_nodeauth/.idea
+pz_nodeauth/.env
